@@ -52,19 +52,38 @@ This system provides a sophisticated product management platform with:
 
 ### **Prerequisites**
 - Docker & Docker Compose
-- Python 3.11+
+- **Python 3.10+** (required for MCP library)
 - Node.js (for MCP Inspector)
 - Ollama (optional, for Ollama integration)
 
+### **🔍 Python Version Check**
+```bash
+# Check your Python version first
+python3 --version
+
+# If you have Python < 3.10, you need to upgrade or use a different Python version
+# On macOS with Homebrew:
+# brew install python@3.11
+
+# On Ubuntu/Debian:
+# sudo apt update && sudo apt install python3.11
+
+# On Windows: Download from python.org
+```
+
 ### **1. Clone & Setup**
 ```bash
-git clone <your-repo>
+git clone https://github.com/pysorflow/mcpdemo.git
 cd mcpdemo
 
-# Create Python virtual environment
+# Create Python virtual environment (use Python 3.10+)
 python3 -m venv venv
 source venv/bin/activate  # On macOS/Linux
 # venv\Scripts\activate   # On Windows
+
+# If python3 is too old, try specific version:
+# python3.11 -m venv venv
+# python3.10 -m venv venv
 
 # Install dependencies
 pip install -r requirements.txt
@@ -371,19 +390,35 @@ docker-compose ps
 docker-compose down && docker-compose up -d
 ```
 
-**2. MCP Server Not Starting**
+**2. Python Version Error (MCP requires Python 3.10+)**
+```bash
+# Check your Python version
+python3 --version
+
+# If version is < 3.10, upgrade Python:
+# macOS (Homebrew): brew install python@3.11
+# Ubuntu/Debian: sudo apt install python3.11
+# Windows: Download from python.org
+
+# Create virtual environment with correct Python version
+python3.11 -m venv venv  # or python3.10
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+**3. MCP Server Not Starting**
 ```bash
 # Check Python environment
 source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-**3. Claude Desktop Not Connecting**
+**4. Claude Desktop Not Connecting**
 - Verify config file path
 - Check shell script permissions: `chmod +x run_mcp_server.sh`
 - Restart Claude Desktop after config changes
 
-**4. Ollama Models Not Found**
+**5. Ollama Models Not Found**
 ```bash
 # List available models
 ollama list
