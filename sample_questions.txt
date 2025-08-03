@@ -1,0 +1,141 @@
+# Sample Questions for MCP Product Management System
+# These questions demonstrate the various capabilities of your enhanced MCP server
+# Use these with Claude Desktop, MCP Inspector, or the Ollama Bridge
+
+## Basic Product Queries
+1. What are the details of SKU 120715?
+2. Show me the first 5 products in our inventory
+3. Give me details about product 2420981
+4. What's the information for item 1383264?
+
+## Search & Discovery
+5. Find all products with "shirt" in the name
+6. Search for blue products in our inventory
+7. Show me all polo shirts we have
+8. Find products from American Apparel
+9. Search for products containing "cotton"
+10. What electronics do we carry?
+
+## Category & Classification
+11. What product categories do we have?
+12. Show me all products in the T-Shirts category
+13. List products in the Sweatshirts/Fleece category
+14. What subcategories exist under our main categories?
+
+## Stock Management
+15. Which products have low stock (under 50 units)?
+16. Show me products that are completely out of stock
+17. Find products with more than 1000 units in stock
+18. What's our stock situation for products under 10 units?
+
+## Django-Style Advanced Filtering
+19. Filter products where category contains "shirt" and stock is greater than or equal to 100
+20. Show me size XL products with prices less than $20, sorted by stock descending
+21. Find all black products in sizes S, M, and L from the Gildan warehouse
+22. Filter products with prices between $10 and $25, sorted by price ascending
+23. Show me page 2 of T-Shirts with more than 50 units in stock, 10 items per page
+
+## Analytics & Statistics
+24. What are the filter statistics for categories, colors, and sizes?
+25. Give me a breakdown of our inventory by warehouse and product status
+
+## Complex Business Queries (for Ollama Bridge)
+These work especially well with the Ollama natural language processing:
+
+- "I need to find casual shirts under $15 that we have good stock levels for"
+- "What blue items do we have that are popular and well-stocked?"
+- "Show me our most expensive products that are running low"
+- "Find professional-looking items suitable for corporate gifts"
+- "What products would work well for a summer promotional campaign?"
+
+## Sample MCP Tool Calls (JSON format for direct testing)
+
+### Basic Product Lookup:
+```json
+{
+  "tool": "get_product",
+  "arguments": {"sku": "120715"}
+}
+```
+
+### Django-Style Filtering:
+```json
+{
+  "tool": "filter_products",
+  "arguments": {
+    "filters": {
+      "category__icontains": "shirt",
+      "stock__gte": 50,
+      "price__lte": 25.00
+    },
+    "ordering": ["-stock", "title"],
+    "page": 1,
+    "page_size": 10
+  }
+}
+```
+
+### Advanced Search:
+```json
+{
+  "tool": "advanced_search_products",
+  "arguments": {
+    "query": "blue",
+    "min_stock": 20,
+    "category_filter": "T-Shirts",
+    "sort_by": "price",
+    "limit": 15
+  }
+}
+```
+
+### Filter Statistics:
+```json
+{
+  "tool": "get_filter_stats",
+  "arguments": {
+    "fields": ["category", "color", "size", "warehouse", "status"]
+  }
+}
+```
+
+### Size-Specific Filtering:
+```json
+{
+  "tool": "filter_products",
+  "arguments": {
+    "filters": {
+      "size__in": ["S", "M", "L"],
+      "color__icontains": "black",
+      "warehouse__exact": "Gildan"
+    },
+    "ordering": ["price"],
+    "page": 1,
+    "page_size": 20
+  }
+}
+```
+
+## Tips for Best Results:
+
+1. **Natural Language (Ollama)**: Ask conversational questions - the system understands context
+2. **Specific Filtering**: Use Django-style filters for precise results
+3. **Pagination**: For large result sets, use page and page_size parameters
+4. **Multiple Criteria**: Combine multiple filters for targeted searches
+5. **Sorting**: Use ordering arrays with "-" prefix for descending sorts
+
+## Testing Different Interfaces:
+
+- **Claude Desktop**: Use natural language questions (1-25)
+- **MCP Inspector**: Test JSON tool calls directly
+- **Ollama Bridge**: Try conversational queries with different models
+- **API Testing**: Use the JSON examples for programmatic access
+
+## Performance Notes:
+
+- Filter queries are optimized with proper indexing
+- Pagination prevents memory issues with large datasets
+- Statistics queries provide insights into data distribution
+- Advanced search supports complex multi-field queries
+
+Happy testing! 🚀

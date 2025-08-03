@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mcp-server:
+    build: .
+    command: python mcp_server.py
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=mcpdb
+      - DB_USER=mcpuser
+      - DB_PASSWORD=mcppass
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: mcpdb
+      POSTGRES_USER: mcpuser
+      POSTGRES_PASSWORD: mcppass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
